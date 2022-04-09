@@ -10,11 +10,11 @@ const Login = () => {
                 <form action="">
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
-                        <input type="email" name="" id="email" />
+                        <input type="email" name="email" id="" required />
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="" id="password" />
+                        <input type="password" name="password" id="" required />
                     </div>
                     <input className='form-submit' type="submit" value="Login" />
                 </form>
@@ -27,7 +27,6 @@ const Login = () => {
                     <span className='line'></span>
                 </div>
                 <div className='singin-auth'>
-                    {/* <FontAwesomeIcon icon={}></FontAwesomeIcon> */}
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1024px-Google_%22G%22_Logo.svg.png" alt="" />
                     <input className='form-submit' type="submit" value="Continue with Google" />
                 </div>
