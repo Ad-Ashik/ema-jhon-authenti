@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init'
 
 const SingUp = () => {
     const [email, setEamil] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const [createUserWithEmailAndPassword, user] = useCreateUserWithEmailAndPassword(auth);
 
     const handleEmail = e => {
         setEamil(e.target.value);
@@ -20,12 +25,23 @@ const SingUp = () => {
         console.log(e.target.value)
     }
 
+    if (user) {
+        navigate('/')
+    }
+
     const handileSubmit = e => {
         e.preventDefault();
         if (password !== confirmPassword) {
             setError("Opps! your passwrod did not match.");
             return;
         }
+        if (password.length < 6) {
+            setError("Please atlast 6 chareters.")
+            return;
+        }
+
+        createUserWithEmailAndPassword(email, password);
+
     }
 
     return (
