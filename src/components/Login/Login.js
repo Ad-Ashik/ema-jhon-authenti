@@ -1,21 +1,55 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import auth from '../../firebase.init';
 import './Login.css';
 
 const Login = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
+
+    const [
+        signInWithEmailAndPassword,
+        user,
+        loading,
+        error,
+    ] = useSignInWithEmailAndPassword(auth);
+
+
+    const handleEmail = e => {
+        setEmail(e.target.value);
+    }
+
+    const handlePassword = e => {
+        setPassword(e.target.value);
+    }
+
+    if (user) {
+        navigate('/');
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        signInWithEmailAndPassword(email, password);
+    }
+
     return (
         <div className='form-container'>
             <div>
                 <h2>Login</h2>
-                <form action="">
+                <form onSubmit={handleSubmit}>
                     <div className="input-group">
                         <label htmlFor="email">Email</label>
-                        <input type="email" name="email" id="" required />
+                        <input onBlur={handleEmail} type="email" name="email" id="" required />
                     </div>
                     <div className="input-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" name="password" id="" required />
+                        <input onBlur={handlePassword} type="password" name="password" id="" required />
                     </div>
+                    <p className='error'>{error ? "wrong password" : loading && <span style={{ color: "green" }}>Loadin...</span>}</p>
                     <input className='form-submit' type="submit" value="Login" />
                 </form>
                 <div className='create-user'>

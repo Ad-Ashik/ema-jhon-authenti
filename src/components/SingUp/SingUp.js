@@ -26,7 +26,7 @@ const SingUp = () => {
     }
 
     if (user) {
-        navigate('/')
+        navigate('/login')
     }
 
     const handileSubmit = e => {
